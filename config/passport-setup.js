@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('dotenv').config() // 🔐
 const passport = require('passport')
 const GitHubStrategy = require('passport-github').Strategy
 const userModel = require('../models/user-model.js')
@@ -7,15 +7,18 @@ const userModel = require('../models/user-model.js')
 // takes user, get id,
 
 passport.serializeUser((user,done) => {
-  done(null, user.id)
+  done(null, user.id) // go to deserializeUser 🙀
 })
 
-// take
+// Get user to store in req.user 💯
 passport.deserializeUser((id,done)=>{
   userModel.getOneUser(id)
     .then((user) =>{
       // console.log('deser ', user)
+      // Do some passport session stuff,
+      // then some cookie session stuff 😬😱
       done(null,user)
+      // Then we go to the callbackURL 🛫
     })
 })
 
@@ -26,9 +29,13 @@ passport.deserializeUser((id,done)=>{
 passport.use(
   new GitHubStrategy({
       // options for the GitHub Strategy
+      // get this in your github developer settings
+      // make some secrets 🤐🤐🤐🤐
       clientID: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
       callbackURL: '/auth/github/redirect'
+      // ^ goes to the router.get at the bottom of our auth-routes.js
+      // lets us auth with GitHub. have res + req 😏
     },
     // passport call back function
     (accessToken, refreshToken, profile, done) => {
@@ -44,10 +51,10 @@ passport.use(
       userModel.checkUser(profile._json.id)
         .then((result) => {
           if (result) {
-            // already ahve the user
+            // already ahve the user 👍
             console.log('user is: ', result)
             // null if error, or pass user
-            done(null, result)
+            done(null, result) // when done is called, we go to passport.serializeUser
           } else {
             // Create user
             let newUser = {

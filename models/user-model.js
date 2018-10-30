@@ -21,7 +21,7 @@ const create = (body) => {
 }
 
 const getOneUser = (id) => {
-  // console.log('ingetoneuserhdflskajflkdjasl')
+  // console.log('ingetoneuserhdflskajflkdjasl') 
   return knex('users')
     .where('id', id)
     .then(user => {
