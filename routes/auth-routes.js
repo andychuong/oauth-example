@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const passport = require('passport');
+const jwt = require('jsonwebtoken')
 
 // auth login ✔️
 router.get('/login', (req, res) => {
@@ -26,7 +27,18 @@ router.get('/github', passport.authenticate('github', {
 router.get('/github/redirect', passport.authenticate('github'), (req, res) => {
     // res.send(req.user);
     //Probably a good place for JWT stuff  ? 🤔 ? 🤔 ? 🤔 ? 🤔
-    res.redirect('/profile/');
+    let payLoad = {
+    id: req.user.id,
+    oauthid: req.user.oauthId,
+    loggedIn: true,
+  }
+  let token = jwt.sign(payLoad,"process.env.TOKEN_SECRET", {
+    expiresIn: '8h'
+  })
+  res.cookie("token", token, {
+    maxAge: 900000
+  })
+  res.redirect('/profile/');
 });
 
 module.exports = router;
