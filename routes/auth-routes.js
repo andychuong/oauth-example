@@ -36,7 +36,7 @@ router.get('/github/redirect', passport.authenticate('github'), (req, res) => {
     expiresIn: '8h'
   })
   res.cookie("token", token, {
-    maxAge: 900000
+    maxAge: 17280000
   })
   res.redirect('/profile/');
 });

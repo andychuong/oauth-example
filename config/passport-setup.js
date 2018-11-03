@@ -31,8 +31,9 @@ passport.use(
       // options for the GitHub Strategy
       // get this in your github developer settings
       // make some secrets 🤐🤐🤐🤐
-      clientID: process.env.CLIENT_ID,
-      clientSecret: process.env.CLIENT_SECRET,
+      // console.log(process.env.CLIENT_ID)
+      clientID: '0c1e52c1b759af243d5d',
+      clientSecret: '74ae95efa842d9c80c8ffee76f4c987ec97c722f',
       callbackURL: '/auth/github/redirect'
       // ^ goes to the router.get at the bottom of our auth-routes.js
       // lets us auth with GitHub. have res + req 😏
